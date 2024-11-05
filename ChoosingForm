@@ -1,10 +1,17 @@
-package BusTicket;
+package meow;
 
-import java.awt.*;
-import javax.swing.*;
+import java.awt.EventQueue;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import java.awt.Panel;
+import java.awt.Color;
+import javax.swing.JLabel;
+import java.awt.Font;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import java.awt.Toolkit;
 import java.awt.event.ActionListener;
-import java.util.Vector;
 import java.awt.event.ActionEvent;
 
 public class ChoosingForm extends JFrame {
@@ -62,51 +69,31 @@ public class ChoosingForm extends JFrame {
         lblNewLabel_2.setBounds(331, 135, 131, 124);
         panel.add(lblNewLabel_2);
 
+        
         JButton btnNewButton = new JButton("ADD PASSENGER");
         btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 13));
         btnNewButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                // Create and display the PassengerForm
                 PassengerForm passengerForm = new PassengerForm();
                 passengerForm.setVisible(true);
                 dispose();
             }
         });
+        
 
+        
         btnNewButton.setBackground(Color.WHITE);
         btnNewButton.setForeground(Color.BLACK);
         btnNewButton.setBounds(49, 326, 208, 58);
         panel.add(btnNewButton);
 
-        // "VIEW SEATS" button to open SeatViewer with seat data
         JButton btnViewSeats = new JButton("VIEW SEATS");
         btnViewSeats.setFont(new Font("Tahoma", Font.BOLD, 13));
         btnViewSeats.setBackground(Color.WHITE);
         btnViewSeats.setForeground(Color.BLACK);
         btnViewSeats.setBounds(296, 326, 208, 58);
         panel.add(btnViewSeats);
-
-        btnViewSeats.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                // Prompt user to enter a destination for seat filtering
-                String destination = JOptionPane.showInputDialog("Enter destination to view seats:");
-
-                if (destination != null && !destination.trim().isEmpty()) {
-                    // Retrieve seat data filtered by destination
-                    Vector<Vector<Object>> seatData = getSeatDataByDestination(destination);
-                    if (!seatData.isEmpty()) {
-                        SeatViewer seatViewer = new SeatViewer(seatData, destination);
-                        seatViewer.setVisible(true);
-                    } else {
-                        JOptionPane.showMessageDialog(null, "No seats available for this destination.");
-                    }
-                }
-            }
-
-			private Vector<Vector<Object>> getSeatDataByDestination(String destination) {
-				// TODO Auto-generated method stub
-				return null;
-			}
-        });
 
         JButton btnSearch = new JButton("SEARCH");
         btnSearch.setFont(new Font("Tahoma", Font.BOLD, 13));
@@ -115,5 +102,5 @@ public class ChoosingForm extends JFrame {
         btnSearch.setBounds(551, 326, 208, 58);
         panel.add(btnSearch);   
     }
+    
 }
-       

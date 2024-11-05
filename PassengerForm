@@ -107,7 +107,7 @@ public class PassengerForm extends JFrame {
         JComboBox<String> comboBox = new JComboBox<>();
         comboBox.setForeground(new Color(0, 0, 0));
         comboBox.setFont(new Font("Tahoma", Font.BOLD, 20));
-        comboBox.setBounds(440, 306, 222, 32);
+        comboBox.setBounds(456, 308, 222, 32);
         panel.add(comboBox);
         
         comboBox.addItem("APALIT");
@@ -127,7 +127,7 @@ public class PassengerForm extends JFrame {
         JComboBox<String> comboBox_1 = new JComboBox<>();
         comboBox_1.setForeground(new Color(0, 0, 0));
         comboBox_1.setFont(new Font("Tahoma", Font.BOLD, 20));
-        comboBox_1.setBounds(440, 360, 222, 32);
+        comboBox_1.setBounds(456, 360, 222, 32);
         panel.add(comboBox_1);
         
         comboBox_1.addItem("SENIOR CITIZEN");
@@ -223,6 +223,21 @@ public class PassengerForm extends JFrame {
         catCodes.setFont(new Font("Tahoma", Font.PLAIN, 12));
         catCodes.setBounds(10, 230, 130, 50);
         legendPanel1.add(catCodes);
+        
+        JButton btnBack = new JButton("BACK");
+        btnBack.setFont(new Font("Tahoma", Font.BOLD, 12));
+        btnBack.setBackground(Color.WHITE);
+        btnBack.setBounds(30, 466, 133, 32);
+        panel.add(btnBack);
+
+        // Action listener for Back button
+        btnBack.addActionListener(e -> {
+            ChoosingForm choosingForm = new ChoosingForm();
+            choosingForm.setVisible(true);
+            dispose();
+            
+        });
+
         
         JButton btnfinish = new JButton("FINISH");
         btnfinish.addActionListener(new ActionListener() {
@@ -328,7 +343,7 @@ public class PassengerForm extends JFrame {
 
             // Create a temporary model for search results
             DefaultTableModel tempModel = new DefaultTableModel();
-            tempModel.setColumnIdentifiers(new Object[] {"NAME", "AGE", "CATEGORY"}); // Only show Name, Age, and Category columns
+            tempModel.setColumnIdentifiers(new Object[]{"NAME", "AGE", "CATEGORY"}); // Only show Name, Age, and Category columns
 
             for (int i = 0; i < model.getRowCount(); i++) {
                 String destination = model.getValueAt(i, 3).toString().toUpperCase();
@@ -351,7 +366,7 @@ public class PassengerForm extends JFrame {
                 lblDestination.setText("Destination: " + searchText);
             } else {
                 JOptionPane.showMessageDialog(this, "No matching destination found.", "Search Result", JOptionPane.INFORMATION_MESSAGE);
-                
+
                 // Reset the table and clear the label if no match is found
                 table_1.setModel(model);
                 lblDestination.setText("");
@@ -359,9 +374,7 @@ public class PassengerForm extends JFrame {
 
             textFieldsearch.setText("");  // Clear search field after search
         });
-
-
-        
+ 
         btnRemoveToSeats.addActionListener(e -> {
             // Check if a row is selected
             int selectedRow = table_1.getSelectedRow();

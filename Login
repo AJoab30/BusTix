@@ -1,4 +1,4 @@
-package BusTicket;
+package meow;
 
 import java.awt.EventQueue;
 import javax.swing.JFrame;
@@ -74,6 +74,13 @@ public class Login extends JFrame {
         lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 17));
         lblNewLabel.setBounds(506, 239, 108, 24);
         contentPane.add(lblNewLabel);
+        
+   
+        JLabel lblSearchDestination = new JLabel("");
+        lblSearchDestination.setFont(new Font("Tahoma", Font.BOLD, 15));
+        lblSearchDestination.setBounds(10, 5, 200, 25); // Adjust position as needed
+        panel.add(lblSearchDestination);
+
         
         textField = new JTextField();
         textField.setColumns(10);

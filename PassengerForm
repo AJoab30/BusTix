@@ -1,4 +1,4 @@
-package BusTicket;
+package meow;
 
 import java.awt.EventQueue;
 import javax.swing.JFrame;
@@ -22,8 +22,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class PassengerForm extends JFrame {
-    private static PassengerForm instance = null;
-    
+
     private JPanel contentPane;
     private JTable table_1;
     DefaultTableModel model;
@@ -115,20 +114,6 @@ public class PassengerForm extends JFrame {
         comboBox.addItem("CALUMPIT");
         comboBox.addItem("MALOLOS");
         comboBox.addItem("BOCAUE");
-        
-        JButton btnBack = new JButton("BACK");
-        btnBack.setFont(new Font("Tahoma", Font.BOLD, 12));
-        btnBack.setBackground(Color.WHITE);
-        btnBack.setBounds(10, 500, 120, 32); // Position it as you like
-        panel.add(btnBack);
-        
-        btnBack.addActionListener(e -> {
-            // Hide the current form
-            this.setVisible(false);
-            // Create an instance of the previous form (ChoosingForm)
-            ChoosingForm choosingForm = new ChoosingForm();
-            choosingForm.setVisible(true);
-        });
         
         comboBox.setRenderer(new DefaultListCellRenderer() {
             @Override
@@ -338,32 +323,43 @@ public class PassengerForm extends JFrame {
 
 
         btnSearch.addActionListener(e -> {
-    String searchText = textFieldsearch.getText().trim().toLowerCase();
-    boolean found = false;
+            String searchText = textFieldsearch.getText().trim().toUpperCase(); // Convert input to uppercase for matching initials
+            boolean found = false;
 
-    for (int i = 0; i < model.getRowCount(); i++) {
-        String passengerName = model.getValueAt(i, 0).toString().toLowerCase();
-        String destination = model.getValueAt(i, 3).toString().toLowerCase();
+            // Create a temporary model for search results
+            DefaultTableModel tempModel = new DefaultTableModel();
+            tempModel.setColumnIdentifiers(new Object[] {"NAME", "AGE", "CATEGORY"}); // Only show Name, Age, and Category columns
 
-        // Check if search text matches either name or destination
-        if (passengerName.contains(searchText) || destination.contains(searchText)) {
-            String message = "Passenger Found:\n" +
-                             "Name: " + model.getValueAt(i, 0) + "\n" +
-                             "Age: " + model.getValueAt(i, 1) + "\n" +
-                             "Category: " + model.getValueAt(i, 2) + "\n" +
-                             "Destination: " + model.getValueAt(i, 3) + "\n" +
-                             "Seat Number: " + model.getValueAt(i, 4);
-            JOptionPane.showMessageDialog(this, message, "Search Result", JOptionPane.INFORMATION_MESSAGE);
-            found = true;
-            break;
-        }
-    }
-    textFieldsearch.setText("");
+            for (int i = 0; i < model.getRowCount(); i++) {
+                String destination = model.getValueAt(i, 3).toString().toUpperCase();
+                String initials = destination.substring(0, 2); // Get initials of destination
 
-    if (!found) {
-        JOptionPane.showMessageDialog(this, "Passenger not found", "Search", JOptionPane.INFORMATION_MESSAGE);
-    }
-});
+                if (initials.equals(searchText)) {  // Match initials
+                    // Add matching row to the temporary model
+                    tempModel.addRow(new Object[]{
+                        model.getValueAt(i, 0), // NAME
+                        model.getValueAt(i, 1), // AGE
+                        model.getValueAt(i, 2)  // CATEGORY
+                    });
+                    found = true;
+                }
+            }
+
+            if (found) {
+                // Set the temporary model to the table and display the destination initials
+                table_1.setModel(tempModel);
+                lblDestination.setText("Destination: " + searchText);
+            } else {
+                JOptionPane.showMessageDialog(this, "No matching destination found.", "Search Result", JOptionPane.INFORMATION_MESSAGE);
+                
+                // Reset the table and clear the label if no match is found
+                table_1.setModel(model);
+                lblDestination.setText("");
+            }
+
+            textFieldsearch.setText("");  // Clear search field after search
+        });
+
 
         
         btnRemoveToSeats.addActionListener(e -> {
